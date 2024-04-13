@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<variables>
+    <variable name="VT_WINDOWS_DISK_MAX_SIZ">
+        <value>100</value>
+    </variable>
+</variables>
