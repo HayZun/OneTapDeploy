@@ -1,21 +1,7 @@
-<!--*************************************************
-- Erase disk
-- autologon
-- execute powershell command
-**************************************************-->
-<?xml version="1.0" encoding="utf-8"?>
 <unattend xmlns="urn:schemas-microsoft-com:unattend">
+    <!-- Phase oobeSystem -->
     <settings pass="oobeSystem">
-        <component name="Microsoft-Windows-International-Core" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS"
-            xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-            <InputLocale>Fr-fr</InputLocale>
-            <SystemLocale>en-US</SystemLocale>
-            <UILanguage>en-US</UILanguage>
-            <UILanguageFallback>en-US</UILanguageFallback>
-            <UserLocale>en-US<?xml version="1.0" encoding="utf-8"?>
-<unattend xmlns="urn:schemas-microsoft-com:unattend">
-    <settings pass="oobeSystem">
+        <!-- Configuration régionale -->
         <component name="Microsoft-Windows-International-Core" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS"
             xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
@@ -25,6 +11,7 @@
             <UILanguageFallback>en-US</UILanguageFallback>
             <UserLocale>en-US</UserLocale>
         </component>
+        <!-- Configuration du shell -->
         <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS"
             xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
@@ -47,7 +34,7 @@
                 <LocalAccounts>
                     <LocalAccount wcm:action="add">
                         <Group>Administrators</Group>
-                        <Name>User</Name>
+                        <Name>Ansible</Name>
                         <Password>
                             <PlainText>true</PlainText>
                             <Value>password</Value>
@@ -55,9 +42,16 @@
                     </LocalAccount>
                 </LocalAccounts>
             </UserAccounts>
+            <AutoLogon>
+                <Password>
+                    <Value>password</Value>
+                    <PlainText>true</PlainText>
+                </Password>
+                <Enabled>true</Enabled>
+                <LogonCount>1</LogonCount>
+                <Username>Ansible</Username>
         </component>
-    </settings>
-    <settings pass="specialize">
+        <!-- Commandes synchrones à exécuter lors de l'installation -->
         <component name="Microsoft-Windows-Deployment" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS"
             xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
@@ -69,28 +63,17 @@
                 </RunSynchronousCommand>
                 <RunSynchronousCommand wcm:action="add">
                     <Order>2</Order>
-                    <Path>net user User /active:Yes</Path>
+                    <Path>net user Ansible /active:Yes</Path>
                     <WillReboot>Never</WillReboot>
                 </RunSynchronousCommand>
                 <RunSynchronousCommand wcm:action="add">
                     <Order>3</Order>
-                    <Path>net user User /passwordreq:yes</Path>
+                    <Path>net user Ansible /passwordreq:yes</Path>
                     <WillReboot>Never</WillReboot>
                 </RunSynchronousCommand>
             </RunSynchronous>
         </component>
-        <component name="Microsoft-Windows-Security-SPP-UX" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS"
-            xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-            <SkipAutoActivation>true</SkipAutoActivation>
-        </component>
-        <component name="Microsoft-Windows-UnattendedJoin" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS"
-            xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-            <Identification>
-                <JoinWorkgroup>WORKGROUP</JoinWorkgroup>
-            </Identification>
-        </component>
+        <!-- Configuration de l'exécution de la commande PowerShell lors du premier démarrage -->
         <FirstLogonCommands>
             <SynchronousCommand wcm:action="add">
                 <CommandLine>powershell.exe -ExecutionPolicy Bypass -Command "New-Item -ItemType Directory -Path C:\Ansible"</CommandLine>
@@ -98,7 +81,9 @@
             </SynchronousCommand>
         </FirstLogonCommands>
     </settings>
+    <!-- Phase windowsPE -->
     <settings pass="windowsPE">
+        <!-- Configuration régionale pour WinPE -->
         <component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS"
             xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
@@ -111,10 +96,12 @@
                 <UILanguage>en-US</UILanguage>
             </SetupUILanguage>
         </component>
+        <!-- Configuration de l'installation -->
         <component name="Microsoft-Windows-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS"
             xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
             <RunSynchronous>
+                <!-- Commandes à exécuter pendant l'installation -->
                 <RunSynchronousCommand wcm:action="add">
                     <Order>1</Order>
                     <Path>reg add "HKLM\SYSTEM\Setup\LabConfig" /v "BypassTPMCheck" /t REG_DWORD /d 1 /f</Path>
@@ -155,6 +142,7 @@
                 </ProductKey>
             </UserData>
             <DiskConfiguration>
+                <!-- Configuration de la partition -->
                 <Disk wcm:action="add">
                     <DiskID>0</DiskID>
                     <WillWipeDisk>true</WillWipeDisk>
@@ -196,20 +184,21 @@
                         </ModifyPartition>
                     </ModifyPartitions>
                 </Disk>
-			<ImageInstall>
-				<OSImage>
-					<InstallFrom>
-						<MetaData wcm:action="add">
-							<Key>/IMAGE/INDEX</Key>
-							<Value>2</Value>
-						</MetaData>
-					</InstallFrom>
-					<InstallTo>
-						<DiskID>0</DiskID>
-						<PartitionID>1</PartitionID>
-					</InstallTo>
-				</OSImage>
-			</ImageInstall>
+			    <ImageInstall>
+				    <OSImage>
+					    <InstallFrom>
+						    <MetaData wcm:action="add">
+							    <Key>/IMAGE/INDEX</Key>
+							    <Value>2</Value>
+						    </MetaData>
+					    </InstallFrom>
+					    <InstallTo>
+						    <DiskID>0</DiskID>
+						    <PartitionID>1</PartitionID>
+					    </InstallTo>
+				    </OSImage>
+			    </ImageInstall>
+            </DiskConfiguration>
         </component>
     </settings>
 </unattend>
