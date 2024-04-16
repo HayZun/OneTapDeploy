@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<unattend xmlns="urn:schemas-microsoft-com:unattend">
+    <settings pass="oobeSystem">
+        <component name="Microsoft-Windows-International-Core" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS"
+            xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <InputLocale>Fr-fr</InputLocale>
+            <SystemLocale>en-US</SystemLocale>
+            <UILanguage>en-US</UILanguage>
+            <UILanguageFallback>en-US</UILanguageFallback>
+            <UserLocale>en-US</UserLocale>
+        </component>
+        <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS"
+            xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <TimeZone>Central Standard Time</TimeZone>
+            <OOBE>
+                <HideEULAPage>true</HideEULAPage>
+                <HideLocalAccountScreen>true</HideLocalAccountScreen>
+                <HideOnlineAccountScreens>true</HideOnlineAccountScreens>
+                <HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
+                <NetworkLocation>Home</NetworkLocation>
+                <ProtectYourPC>3</ProtectYourPC>
+                <SkipMachineOOBE>true</SkipMachineOOBE>
+                <SkipUserOOBE>true</SkipUserOOBE>
+            </OOBE>
+            <UserAccounts>
+                <AdministratorPassword>
+                    <PlainText>true</PlainText>
+                    <Value></Value>
+                </AdministratorPassword>
+                <LocalAccounts>
+                    <LocalAccount wcm:action="add">
+                        <Group>Administrators</Group>
+                        <Name>ansible</Name>
+                        <Password>
+                            <PlainText>true</PlainText>
+                            <Value>ansible</Value>
+                        </Password>
+                    </LocalAccount>
+                </LocalAccounts>
+            </UserAccounts>
+            <AutoLogon>
+                <Password>
+                    <Value>ansible</Value>
+                    <PlainText>true</PlainText>
+                </Password>
+                <Enabled>true</Enabled>
+                <LogonCount>999</LogonCount>
+                <Username>ansible</Username>
+            </AutoLogon>
+             <!-- Ajout de FirstLogonCommands -->
+            <FirstLogonCommands>
+                <SynchronousCommand wcm:action="add">
+                    <CommandLine>powershell -Command New-Item -Path "C:\ansible" -ItemType Directory</CommandLine>
+                    <Order>1</Order>
+                    <Description>Create Folder</Description>
+                </SynchronousCommand>
+            </FirstLogonCommands>
+            <FirstLogonCommands>
+                <SynchronousCommand wcm:action="add">l
+                    <CommandLine>Add-content -Path "C:\ansible\WNHC-Invite.xml" -Value "PD94bWwgdmVyc2lvbj0iMS4wIj8+CjxXTEFOUHJvZmlsZSB4bWxucz0iaHR0cDovL3d3dy5taWNy
+b3NvZnQuY29tL25ldHdvcmtpbmcvV0xBTi9wcm9maWxlL3YxIj4KCTxuYW1lPldISEMtSW52aXRl
+PC9uYW1lPgoJPFNTSURDb25maWc+CgkJPFNTSUQ+CgkJCTxuYW1lPldOSEMtSW52aXRlPC9uYW1l
+PgoJCTwvU1NJRD4KCTwvU1NJRENvbmZpZz4KCTxjb25uZWN0aW9uVHlwZT5FU1M8L2Nvbm5lY3Rp
+b25UeXBlPgoJPGNvbm5lY3Rpb25Nb2RlPmF1dG88L2Nvbm5lY3Rpb25Nb2RlPgoJPE1TTT4KCQk8
+c2VjdXJpdHk+CgkJCTxhdXRoRW5jcnlwdGlvbj4KCQkJCTxhdXRoZW50aWNhdGlvbj5XUEEyUFNL
+PC9hdXRoZW50aWNhdGlvbj4KCQkJCTxlbmNyeXB0aW9uPkFFUzwvZW5jcnlwdGlvbj4KCQkJCTx1
+c2VPbmVYPmZhbHNlPC91c2VPbmVYPgoJCQk8L2F1dGhFbmNyeXB0aW9uPgoJCQk8c2hhcmVkS2V5
+PgoJCQkJPGtleVR5cGU+cGFzc1BocmFzZTwva2V5VHlwZT4KCQkJCTxwcm90ZWN0ZWQ+ZmFsc2U8
+L3Byb3RlY3RlZD4KCQkJCTxrZXlNYXRlcmlhbD5XSEhDLUludml0ZTwva2V5TWF0ZXJpYWw+CgkJ
+CTwvc2hhcmVkS2V5PgoJCTwvc2VjdXJpdHk+Cgk8L01TTT4KCTxNYWNSYW5kb21pemF0aW9uIHht
+bG5zPSJodHRwOi8vd3d3Lm1pY3Jvc29mdC5jb20vbmV0d29ya2luZy9XTEFOL3Byb2ZpbGUvdjMi
+PgoJCTxlbmFibGVSYW5kb21pemF0aW9uPmZhbHNlPC9lbmFibGVSYW5kb21pemF0aW9uPgoJPC9N
+YWNSYW5kb21pemF0aW9uPgo8L1dMQU5Qcm9maWxlPg==</CommandLine>
+                    <Order>2</Order>
+                    <Description>Copy File</Description>
+                </SynchronousCommand>
+            </FirstLogonCommands>
+            <FirstLogonCommands>
+                <SynchronousCommand wcm:action="add">
+                    <CommandLine>powershell -Command "ConvertFrom-Base64 -Path C:\ansible\WNHC-Invite.xml -OutFile C:\ansible\WNHC-Invite.xml"</CommandLine>
+                    <Order>3</Order>
+                    <Description>Decode File</Description>
+                </SynchronousCommand>
+            </FirstLogonCommands>
+    </settings>
+    <settings pass="specialize">
+        <component name="Microsoft-Windows-Deployment" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS"
+            xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <RunSynchronous>
+                <RunSynchronousCommand wcm:action="add">
+                    <Order>1</Order>
+                    <Path>net accounts /maxpwage:unlimited</Path>
+                    <WillReboot>Never</WillReboot>
+                </RunSynchronousCommand>
+                <RunSynchronousCommand wcm:action="add">
+                    <Order>2</Order>
+                    <Path>net user ansible /active:Yes</Path>
+                    <WillReboot>Never</WillReboot>
+                </RunSynchronousCommand>
+                <RunSynchronousCommand wcm:action="add">
+                    <Order>3</Order>
+                    <Path>net user ansible /passwordreq:yes</Path>
+                    <WillReboot>Never</WillReboot>
+                </RunSynchronousCommand>
+            </RunSynchronous>
+        </component>
+        <component name="Microsoft-Windows-Security-SPP-UX" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS"
+            xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <SkipAutoActivation>true</SkipAutoActivation>
+        </component>
+        <component name="Microsoft-Windows-UnattendedJoin" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS"
+            xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <Identification>
+                <JoinWorkgroup>WORKGROUP</JoinWorkgroup>
+            </Identification>
+        </component>
+    </settings>
+    <settings pass="windowsPE">
+        <component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS"
+            xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <InputLocale>0409:00000409</InputLocale>
+            <SystemLocale>en-US</SystemLocale>
+            <UILanguage>en-US</UILanguage>
+            <UILanguageFallback>en-US</UILanguageFallback>
+            <UserLocale>en-US</UserLocale>
+            <SetupUILanguage>
+                <UILanguage>en-US</UILanguage>
+            </SetupUILanguage>
+        </component>
+        <component name="Microsoft-Windows-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS"
+            xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <RunSynchronous>
+                <RunSynchronousCommand wcm:action="add">
+                    <Order>1</Order>
+                    <Path>reg add "HKLM\SYSTEM\Setup\LabConfig" /v "BypassTPMCheck" /t REG_DWORD /d 1 /f</Path>
+                    <Description>Add BypassTPMCheck</Description>
+                </RunSynchronousCommand>
+                <RunSynchronousCommand wcm:action="add">
+                    <Order>2</Order>
+                    <Path>reg add "HKLM\SYSTEM\Setup\LabConfig" /v "BypassRAMCheck" /t REG_DWORD /d 1 /f</Path>
+                    <Description>Add BypassRAMCheck</Description>
+                </RunSynchronousCommand>
+                <RunSynchronousCommand wcm:action="add">
+                    <Order>3</Order>
+                    <Path>reg add "HKLM\SYSTEM\Setup\LabConfig" /v "BypassSecureBootCheck" /t REG_DWORD /d 1 /f</Path>
+                    <Description>Add BypassSecureBootCheck</Description>
+                </RunSynchronousCommand>
+                <RunSynchronousCommand wcm:action="add">
+                    <Order>4</Order>
+                    <Path>reg add "HKLM\SYSTEM\Setup\LabConfig" /v "BypassCPUCheck" /t REG_DWORD /d 1 /f</Path>
+                    <Description>Add BypassCPUCheck</Description>
+                </RunSynchronousCommand>
+                <RunSynchronousCommand wcm:action="add">
+                    <Order>5</Order>
+                    <Path>reg add "HKLM\SYSTEM\Setup\LabConfig" /v "BypassStorageCheck" /t REG_DWORD /d 1 /f</Path>
+                    <Description>Add BypassStorageCheck</Description>
+                </RunSynchronousCommand>
+            </RunSynchronous>
+            <Diagnostics>
+                <OptIn>false</OptIn>
+            </Diagnostics>
+            <DynamicUpdate>
+                <Enable>false</Enable>
+                <WillShowUI>OnError</WillShowUI>
+            </DynamicUpdate>
+            <UserData>
+                <AcceptEula>true</AcceptEula>
+                <ProductKey>
+                    <Key>QPM6N-7J2WJ-P88HH-P3YRH-YY74H</Key>
+                </ProductKey>
+            </UserData>
+			<DiskConfiguration>                
+				<Disk wcm:action="add">
+                    <CreatePartitions>						
+                        <CreatePartition wcm:action="add">
+                            <Extend>true</Extend>
+                            <Order>1</Order>
+                            <Type>Primary</Type>
+                        </CreatePartition>
+                    </CreatePartitions>
+                    <ModifyPartitions>						
+                        <ModifyPartition wcm:action="add">
+                            <Active>true</Active>
+                            <Format>NTFS</Format>
+                            <Label>System</Label>
+                            <Order>1</Order>
+                            <PartitionID>1</PartitionID>
+                        </ModifyPartition>
+                    </ModifyPartitions>
+                    <DiskID>0</DiskID>
+                    <WillWipeDisk>true</WillWipeDisk>
+                </Disk>                
+            </DiskConfiguration>
+			<ImageInstall>
+				<OSImage>
+					<InstallTo>
+						<DiskID>0</DiskID>
+						<PartitionID>1</PartitionID>
+					</InstallTo>
+				</OSImage>
+			</ImageInstall>
+        </component>
+    </settings>
+</unattend>
