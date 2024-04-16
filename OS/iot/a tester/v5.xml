@@ -67,7 +67,7 @@
             xmlns=""http://www.microsoft.com/networking/WLAN/profile/v3""><enableRandomization>false</enableRandomization></MacRandomization></WLANProfile>]]>"
           </CommandLine>
           <Order>2</Order>
-          <Description>Copy File</Description>
+          <Description>Copy File </Description>
         </SynchronousCommand>
       </FirstLogonCommands>
         <FirstLogonCommands>
